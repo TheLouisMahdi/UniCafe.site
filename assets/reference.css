@@ -1,0 +1,183 @@
+/* UniCafe visual direction v3: based on the owner's supplied reference.
+   All colors, decorative imagery, touch feedback, typography and layout are CSS-driven.
+   Base components and business logic remain in styles.css / app.js. */
+:root{--bg:#070504;--bg2:#100906;--panel:#1c0e09;--panel2:#2d160e;--text:#fff2d9;--muted:#dbc6ae;--faint:#ad8e74;--gold:#f7cb88;--gold2:#bd7d3e;--edge:#cd8c4b61;--green:#0ea43a;--red:#c51d29;--radius:20px;--max:1120px}
+body{min-width:0;background:#080504;overflow-x:hidden;background-image:radial-gradient(ellipse 70% 22% at 50% -4%,#68321045,transparent)}
+button,a{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+button:active,a:active{transform:scale(.975)}
+.site-header{background:#090604e9;border-bottom:1px solid #a36b3230}
+.brand img{width:168px}
+.head-nav a:hover,.head-nav a.active{background:#c8884425}
+.btn-primary{background:linear-gradient(110deg,#ffe0a5,#d38a43);border:1px solid #ffcd82;color:#211108}
+.btn-ghost{background:linear-gradient(145deg,#2f1b11,#110907);border:1px solid #a76b3c6d}
+.mobile-menu-trigger,.mobile-menu-close{display:none}
+.mobile-drawer-backdrop[hidden]{display:none}
+.mobile-drawer-backdrop{position:fixed;inset:0;background:#000b;z-index:77}
+.mobile-drawer{position:fixed;z-index:78;top:0;bottom:0;right:0;width:min(310px,82vw);background:radial-gradient(circle at 80% 0,#3d2113,#0b0806 60%);border-left:1px solid #d4a06877;box-shadow:-24px 0 80px #0009;padding:22px;transform:translateX(110%);transition:transform .25s ease;display:flex;flex-direction:column;gap:8px;visibility:hidden}
+.mobile-drawer.is-open{transform:translateX(0);visibility:visible}
+.mobile-drawer-heading{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px}
+.mobile-drawer-heading img{width:165px}
+.mobile-drawer a{display:flex;align-items:center;gap:14px;border:1px solid #bc8a4c35;background:#2c1b123a;padding:16px;border-radius:14px;font-weight:700}
+.mobile-drawer a svg:first-child{color:var(--gold)}
+.mobile-drawer a svg:last-child{margin-right:auto}
+.mobile-drawer a[aria-current]{background:#71421d55;border-color:#d9a6609c}
+.mobile-menu-close{width:42px;height:42px;border:1px solid #c5985a77;border-radius:50%;background:#100b07;color:var(--gold);font-size:21px;align-items:center;justify-content:center}
+body.menu-open{overflow:hidden}
+/* Hero: tall immersive art / dramatic centered headline / framed shortcuts / coffee scene */
+.hero-reference{position:relative;isolation:isolate;min-height:720px;display:flex;flex-direction:column;align-items:center;overflow:hidden;background:radial-gradient(ellipse 90% 32% at 45% 26%,#48220b42,transparent 72%),#070504;border:0}
+.ref-top-art{position:absolute;inset:0 0 auto;height:340px;pointer-events:none;z-index:-1;overflow:hidden}
+.ref-top-art:after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,#070504 0%,transparent 65%)}
+.ref-beans{position:absolute;left:-15px;top:0;width:180px;height:320px;object-fit:cover;mask-image:linear-gradient(90deg,#000 5%,transparent 100%)}
+.ref-rome{position:absolute;right:-5px;top:0;width:270px;height:330px;object-fit:cover;opacity:.93;mask-image:linear-gradient(270deg,#000 0%,#000 40%,transparent 97%)}
+.ref-brand{position:relative;z-index:2;text-align:center;padding-top:38px}
+.ref-brand>img{width:clamp(230px,29vw,290px);height:auto;filter:drop-shadow(0 6px 12px #000a)}
+.ref-flag{display:none}
+.ref-center{z-index:2;text-align:center;margin:34px auto 0;display:flex;flex-direction:column;align-items:center;width:min(500px,calc(100% - 28px))}
+.ref-heading h1{font-size:clamp(2.3rem,4vw,3.5rem);letter-spacing:-1.4px;margin:0 0 0;line-height:1.65;color:#ffdb9e;text-shadow:0 4px 12px #000e}
+.ref-heading p{font-size:clamp(1rem,2vw,1.25rem);font-weight:800;margin:0 0 21px;color:#fff5e7;line-height:1.5}
+.ref-cta{min-height:62px;max-width:440px;width:100%;border:1.5px solid #f6b86f;border-radius:99px;background:linear-gradient(105deg,#71360f,#2e180d 43%,#b97531 125%);box-shadow:inset 0 2px 10px #e0a65a40,0 4px 24px #160a05;display:flex;align-items:center;justify-content:space-between;gap:12px;padding:8px 16px;font-size:1.13rem;font-weight:850;color:#fff3dc;transition:transform .16s,box-shadow .2s}
+.ref-cta:hover{box-shadow:0 4px 28px #ce84386e}
+.ref-heart{width:44px;height:44px;background:#fffaf3;color:#d72b2e;display:grid;place-items:center;border-radius:50%}
+.ref-heart svg{fill:#d72b2e;stroke:#d72b2e}
+.ref-cta>svg{transform:scaleX(-1);color:#ffd39d}
+.ref-shortcuts{width:100%;margin-top:24px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.ref-shortcut{display:flex;align-items:center;justify-content:flex-start;flex-direction:column;min-height:135px;border:1px solid #c08b5378;background:linear-gradient(140deg,#1b0e0ac7,#100905cf);border-radius:16px;color:#fff7ed;gap:10px;padding:19px 6px 13px;font-size:.91rem;font-weight:700;line-height:1.55;transition:background .2s,transform .2s}
+.ref-shortcut:hover{background:#3a2214c9;transform:translateY(-3px)}
+.ref-shortcut svg{width:35px;height:35px;color:var(--gold);stroke-width:1.65}
+.ref-scene{position:relative;flex:1;min-height:310px;width:100%;margin-top:-10px;overflow:hidden;isolation:isolate}
+.ref-scene:before{content:"";position:absolute;inset:0;z-index:-2;background:radial-gradient(ellipse 58% 45% at 70% 75%,#94430b69,transparent 90%),radial-gradient(ellipse 60% 60% at 30% 100%,#3a1d0b,transparent 80%)}
+.ref-wood{position:absolute;bottom:0;right:0;left:0;height:120px;transform:skewY(-2deg);transform-origin:bottom right;background:repeating-linear-gradient(2deg,#33180b,#261309 3px,#2a150b 8px,#1b1009 15px);box-shadow:0 -10px 30px #d1752636;opacity:.9}
+.ref-handwriting{position:absolute;z-index:3;left:max(8%,calc(50% - 380px));bottom:53px;color:#f2c087;font:italic clamp(30px,3.5vw,48px)/.94 Georgia,serif;text-shadow:0 5px 8px #0009;transform:rotate(-6deg)}
+.ref-handwriting em{font-size:.7em;font-weight:400}.italy-stripe{display:block;margin-top:14px;width:105px;height:4px;background:linear-gradient(to right,#178950 0 33%,white 33% 67%,#dc2930 67%)}
+.ref-cup{position:absolute;z-index:2;width:235px;height:340px;object-fit:contain;bottom:-25px;right:calc(50% - 250px);filter:drop-shadow(10px 12px 23px #000e) brightness(1.12) saturate(1.12)}
+.ref-ground-beans{position:absolute;z-index:1;right:calc(50% - 330px);bottom:-130px;width:470px;height:230px;transform:rotate(-90deg);background:url('hero-beans.webp') center/cover;mask-image:radial-gradient(ellipse at center,#000 30%,transparent 70%);opacity:.79}
+/* More graphic homepage cards */
+.feature-card,.spotlight,.glass,.support-person{background:radial-gradient(circle at 110% -50%,#713a1760,transparent 85%),linear-gradient(145deg,#25150d,#0e0906);border:1px solid #c38b4d70;box-shadow:inset 0 1px #fff1d90b,0 18px 40px #0004}
+.category-tile{border-color:#c28c4e84}
+/* Vote page: compact rows, inline green/red touch targets like the design image */
+.poll-reference-head{padding-top:34px;display:flex;align-items:center;justify-content:center;gap:16px;max-width:690px}
+.poll-reference-head h1{font-size:clamp(1.2rem,2.6vw,1.9rem);font-weight:800;color:#fff5e8;letter-spacing:0;text-align:center;margin:0}
+.poll-reference-head>a{margin-left:auto;color:var(--gold)}
+.poll-cup-icon{color:var(--gold);margin-right:auto}
+.poll-hint{max-width:690px;text-align:center;margin-top:5px;margin-bottom:14px;font-size:.81rem}
+body[data-page="drinks"] .shell{max-width:770px}
+body[data-page="drinks"] .controls{margin:16px 0 10px}
+body[data-page="drinks"] .search{max-width:none;min-width:180px}
+body[data-page="drinks"] .chips{scrollbar-width:none;margin-bottom:3px}
+body[data-page="drinks"] .chips::-webkit-scrollbar{display:none}
+body[data-page="drinks"] .chip{padding:8px 12px;border-color:#a56b3767;border-radius:10px}
+body[data-page="drinks"] .chip.active{background:#d69a55;color:#1e0f08}
+body[data-page="drinks"] .cat-section{margin:20px 0 28px}
+body[data-page="drinks"] .cat-title{border-right:0;border-bottom:1px solid #c88c5080;padding:0 5px 10px;margin:0 0 13px;justify-content:space-between}
+body[data-page="drinks"] .cat-title h2{font-size:1.15rem;margin:0;color:#ffe5b6}
+body[data-page="drinks"] .cat-title small{color:#cda371;letter-spacing:.6px;font-size:.78rem}
+body[data-page="drinks"] .drinks-grid{grid-template-columns:1fr;gap:8px}
+.compact-drink{border-radius:14px;background:linear-gradient(105deg,#2b140b 0%,#100906 80%);border:1px solid #9e652f9c;overflow:hidden;box-shadow:inset 0 0 0 1px #e6ae5f12}
+.compact-drink .drink-compact-row{direction:ltr;display:grid;grid-template-columns:62px 43px minmax(0,1fr) auto;align-items:center;gap:10px;min-height:67px;padding:6px 9px}
+.drink-thumb{width:60px;height:55px;border-radius:12px;overflow:hidden;background:#33190d;box-shadow:0 0 0 1px #d7a36e55}
+.drink-thumb img{width:100%;height:100%;object-fit:cover;object-position:center 35%;filter:brightness(1.13)}
+.compact-drink .drink-code{font-family:Arial,sans-serif;font-variant-numeric:tabular-nums;direction:ltr;display:inline-grid;place-items:center;justify-self:center;border-radius:7px;font-size:19px;font-weight:800;line-height:1.2;background:linear-gradient(140deg,#b97836,#7c411f);color:#fff0d5;padding:5px 7px;min-width:38px}
+.compact-drink .drink-name{direction:rtl;text-align:right;min-width:0}
+.compact-drink .drink-name strong{font-size:.94rem;font-weight:800;color:#fff8ee;line-height:1.6;display:block;overflow-wrap:anywhere}
+.compact-votes{display:flex;align-items:center;gap:6px;direction:ltr}
+.compact-votes .vote{width:43px;min-width:43px;height:43px;min-height:43px;border-radius:9px;border:1px solid #ffffff14;color:#fff;box-shadow:inset 0 -2px #0005;padding:0}
+.compact-votes .vote.like{background:linear-gradient(145deg,#14bb44,#077a2e)}
+.compact-votes .vote.dislike{background:linear-gradient(145deg,#ee2537,#9a1326)}
+.compact-votes .vote.like.active{outline:2px solid #a8ffbc;outline-offset:1px}
+.compact-votes .vote.dislike.active{outline:2px solid #ffb4b4;outline-offset:1px}
+.compact-votes .vote svg{width:20px;height:20px;stroke-width:2.1}
+.drink-compact-meta{padding:3px 12px 8px;display:flex;align-items:center;gap:10px;justify-content:space-between;color:#b59a80;font-size:.72rem;border-top:1px solid #c0844520;min-height:28px}
+.drink-compact-meta button{border:0;background:none;color:#ecc38d;font-weight:700;font-size:.72rem;display:inline-flex;align-items:center;gap:4px;flex-shrink:0;padding:0}
+.drink-compact-meta button svg{width:16px;height:16px}
+.compact-drink .rate-meter{height:3px;margin:0 12px 7px;background:#563018}
+body[data-page="drinks"] .notice{font-size:.8rem}
+/* Support page with clear iconography and copy-to-clipboard controls */
+.reference-subhead{text-align:center;padding:42px 0 12px}
+.reference-subhead-icon{display:grid;place-items:center;margin:0 auto 8px;color:#f7c77a;width:70px;height:70px;border:1px solid #c4935182;border-radius:50%;background:radial-gradient(circle at 50% 40%,#52301c,#110a07 75%)}
+.reference-subhead h1{font-size:clamp(1.6rem,3vw,2.4rem);margin:0 0 4px}
+.reference-subhead p{font-size:.91rem;margin:0}
+body[data-page="contact"] .support-layout{padding-top:15px}
+body[data-page="contact"] .support-person{background:#170e0a;border-color:#d69e576e}
+body[data-page="contact"] .support-person-head{color:#ffdfa6}
+body[data-page="contact"] .support-buttons .btn{border-radius:12px}
+body[data-page="contact"] .support-buttons .call-action{background:linear-gradient(145deg,#138944,#0d592f);color:#fff;border:1px solid #2ba45b}
+body[data-page="contact"] .support-number{user-select:text}
+/* Standard inner page headings and gold borders */
+body[data-page="about"] .story-photo,body[data-page="club"] .club-photo{border:1px solid #d9a05c78}
+/* Bottom navigation remains accessible on small screens, like a native mobile app */
+@media(min-width:681px){.hero-reference{min-height:795px}.ref-center{margin-top:16px}.ref-scene{min-height:350px}.ref-shortcuts{gap:14px}.ref-brand{padding-top:70px}.ref-cup{width:320px;height:420px;right:calc(50% - 340px)}.ref-ground-beans{right:calc(50% - 410px)}}
+@media(max-width:680px){
+ :root{--radius:18px}
+ .shell{width:calc(100% - 28px)}
+ .site-header{height:66px;position:sticky;background:#070504ec;backdrop-filter:blur(12px)}
+ .mobile-menu-trigger{display:grid;place-items:center;border:1px solid #e6b66b72;border-radius:50%;width:41px;height:41px;background:#1b0d08;color:var(--gold);order:2}
+ .mobile-menu-close{display:flex}
+ .site-header .head-row{justify-content:center;position:relative}
+ .site-header .brand{margin:auto;min-width:0}
+ .site-header .brand img{width:136px}
+ .site-header .brand .flag{display:none}
+ .site-header .mobile-menu-trigger{position:absolute;left:1px;top:12px}
+ body[data-page="index"] .site-header{position:absolute;top:0;left:0;right:0;border:0;background:transparent;z-index:62}
+ body[data-page="index"] .site-header .brand{visibility:hidden}
+ body[data-page="index"] .site-header .mobile-menu-trigger{left:auto;right:0;top:15px;border-color:#e2ae5977;background:#0a0607c4}
+ .hero-reference{min-height:max(750px,calc(100svh - 64px));padding:0;background:#060403}
+ .ref-top-art{height:230px}
+ .ref-beans{top:9px;left:-10px;width:122px;height:220px}
+ .ref-rome{top:2px;right:-32px;width:185px;height:236px}
+ .ref-brand{padding-top:65px}
+ .ref-brand>img{width:245px;max-width:70vw}
+ .ref-center{margin-top:31px;width:calc(100% - 34px)}
+ .ref-heading h1{font-size:clamp(1.85rem,8.15vw,2.4rem);line-height:1.45;letter-spacing:-.9px}
+ .ref-heading p{font-size:clamp(.91rem,4.4vw,1.06rem);margin:4px 0 18px}
+ .ref-cta{min-height:57px;padding:6px 12px;gap:6px;font-size:.94rem;border-radius:99px}
+ .ref-heart{width:42px;height:42px;flex-shrink:0}.ref-cta>svg{width:18px}
+ .ref-shortcuts{margin-top:22px;gap:8px}
+ .ref-shortcut{min-height:119px;gap:9px;border-radius:13px;font-size:.8rem;padding:15px 4px 10px;line-height:1.5}
+ .ref-shortcut svg{width:30px;height:30px}
+ .ref-scene{min-height:240px;flex:1;margin-top:0}
+ .ref-cup{width:190px;height:276px;right:2%;bottom:-8px}
+ .ref-handwriting{font-size:clamp(24px,6.5vw,35px);left:6%;bottom:65px}
+ .ref-ground-beans{right:-55px;bottom:-110px;width:330px;height:190px}
+ .ref-wood{height:80px}
+ body[data-page="drinks"] .site-header,body[data-page="contact"] .site-header{height:61px}
+ .poll-reference-head{padding-top:21px;gap:8px}
+ .poll-reference-head h1{font-size:1.02rem;line-height:1.4}
+ .poll-reference-head>a{width:28px}
+ .poll-cup-icon svg{width:30px;height:30px}
+ .poll-hint{font-size:.77rem;margin:6px auto 12px}
+ body[data-page="drinks"] .controls{display:flex;align-items:center;gap:8px;margin:11px 0 8px}
+ body[data-page="drinks"] .controls .tag{font-size:.7rem;white-space:nowrap;padding:5px 7px}
+ body[data-page="drinks"] .search{min-width:0;flex:1}
+ body[data-page="drinks"] .search input{height:41px;font-size:.8rem}
+ body[data-page="drinks"] .chip{font-size:.72rem;padding:8px 10px}
+ body[data-page="drinks"] .cat-title h2{font-size:1.02rem}
+ body[data-page="drinks"] .cat-title small{font-size:.69rem}
+ body[data-page="drinks"] .drinks-grid{gap:7px}
+ .compact-drink{border-radius:12px}
+ .compact-drink .drink-compact-row{grid-template-columns:46px 33px minmax(0,1fr) auto;min-height:58px;gap:6px;padding:5px 7px}
+ .drink-thumb{width:46px;height:46px;border-radius:8px}
+ .compact-drink .drink-code{font-size:15px;min-width:32px;padding:6px 4px;border-radius:6px}
+ .compact-drink .drink-name strong{font-size:clamp(.75rem,3.3vw,.88rem);line-height:1.4}
+ .compact-votes{gap:4px}
+ .compact-votes .vote{width:36px;min-width:36px;height:39px;min-height:39px;border-radius:8px}
+ .compact-votes .vote svg{width:19px;height:19px}
+ .drink-compact-meta{min-height:26px;font-size:.66rem;padding:3px 9px 5px}
+ .drink-compact-meta button{font-size:.66rem}
+ .bottom-nav{background:#0d0806f7;border-top:1px solid #b4783d74}
+ .bottom-nav a.active{background:#85532727}
+ .footer{background:#0c0806}
+ .reference-subhead{padding:24px 0 8px}
+ .reference-subhead-icon{height:62px;width:62px}
+ .reference-subhead h1{font-size:1.4rem}
+ .reference-subhead p{font-size:.82rem}
+ body[data-page="contact"] .support-layout{padding-top:10px}
+}
+@media(max-width:360px){.ref-shortcut{font-size:.74rem}.ref-center{width:calc(100% - 24px)}.ref-heading h1{font-size:1.85rem}.compact-drink .drink-compact-row{grid-template-columns:42px 29px minmax(0,1fr) auto;gap:4px;padding:5px}.drink-thumb{width:42px}.compact-votes .vote{width:33px;min-width:33px}.compact-drink .drink-code{min-width:28px;font-size:14px}.compact-drink .drink-name strong{font-size:.75rem}}
+@media(prefers-reduced-motion:reduce){.mobile-drawer{transition:none}}
+/* Preserve the reference's left-to-right visual order: support, anonymous, about. */
+.ref-shortcuts{direction:ltr}
+.ref-shortcut{direction:rtl}
+.ref-cup{-webkit-mask-image:radial-gradient(ellipse 71% 71% at 51% 57%,#000 54%,transparent 100%);mask-image:radial-gradient(ellipse 71% 71% at 51% 57%,#000 54%,transparent 100%)}
+/* Reference CTA: heart on left and navigation arrow on right. */
+.ref-cta{direction:ltr}
+.ref-cta>span:not(.ref-heart){direction:rtl}

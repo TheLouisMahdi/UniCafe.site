@@ -58,3 +58,12 @@ Proof files: `artifacts/github-live-mobile.png`, `artifacts/github-responsive.js
 ## Resume
 
 GitHub hosting is complete. When the official domain activates, verify the domain detail now shows the assigned Cloudflare nameservers. Finish root and www attachment in the existing Pages project, check delegation and HTTPS with normal certificate verification, run the published-site checks and generate the final QR. Update this status file. Do not recreate the Cloudflare or Supabase projects.
+
+
+## Cup image refresh — 2026-10-28
+
+Replaced the 149px poster-crop cup images with five independent, high-detail generated product images inspired by the owner's supplied poster. The teal blue cup is used on the homepage and hot-drinks category; the other categories use glass espresso, black latte-art, hazelnut latte and white porcelain cups. These are decorative illustrations. Real machine photos are preserved.
+
+Web assets are 768px wide WebP, with separate 192px menu thumbnails (five thumbnails total 51,294 bytes). The teal asset retains alpha; the old radial mask that softened its edges was removed. Versioned filenames and module/CSS cache keys prevent stale images. The club background also uses the new arabica photo. Original PNG masters are retained locally under ignored `artifacts/cup-masters/`. Final prompts and file locations are recorded in `reference/cup-assets.md`.
+
+Preview checks: homepage, drinks and club at 320/360/390/430/1440px; no horizontal overflow or broken loaded images, 24 unchanged menu entries, and no console errors. Existing owner-controlled visibility settings were respected. Publication uses the existing GitHub Pages workflow and public-host verification.

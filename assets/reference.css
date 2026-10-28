@@ -75,7 +75,7 @@ body[data-page="drinks"] .drinks-grid{grid-template-columns:1fr;gap:8px}
 .compact-drink{border-radius:14px;background:linear-gradient(105deg,#2b140b 0%,#100906 80%);border:1px solid #9e652f9c;overflow:hidden;box-shadow:inset 0 0 0 1px #e6ae5f12}
 .compact-drink .drink-compact-row{direction:ltr;display:grid;grid-template-columns:62px 43px minmax(0,1fr) auto;align-items:center;gap:10px;min-height:67px;padding:6px 9px}
 .drink-thumb{width:60px;height:55px;border-radius:12px;overflow:hidden;background:#33190d;box-shadow:0 0 0 1px #d7a36e55}
-.drink-thumb img{width:100%;height:100%;object-fit:cover;object-position:center 35%;filter:brightness(1.13)}
+.drink-thumb img{width:100%;height:100%;object-fit:contain;object-position:center;padding:2px}
 .compact-drink .drink-code{font-family:Arial,sans-serif;font-variant-numeric:tabular-nums;direction:ltr;display:inline-grid;place-items:center;justify-self:center;border-radius:7px;font-size:19px;font-weight:800;line-height:1.2;background:linear-gradient(140deg,#b97836,#7c411f);color:#fff0d5;padding:5px 7px;min-width:38px}
 .compact-drink .drink-name{direction:rtl;text-align:right;min-width:0}
 .compact-drink .drink-name strong{font-size:.94rem;font-weight:800;color:#fff8ee;line-height:1.6;display:block;overflow-wrap:anywhere}
@@ -177,7 +177,10 @@ body[data-page="about"] .story-photo,body[data-page="club"] .club-photo{border:1
 /* Preserve the reference's left-to-right visual order: support, anonymous, about. */
 .ref-shortcuts{direction:ltr}
 .ref-shortcut{direction:rtl}
-.ref-cup{-webkit-mask-image:radial-gradient(ellipse 71% 71% at 51% 57%,#000 54%,transparent 100%);mask-image:radial-gradient(ellipse 71% 71% at 51% 57%,#000 54%,transparent 100%)}
+.ref-cup{filter:drop-shadow(8px 12px 18px #0009)}
+.category-tile img{object-position:center;filter:none}
+.category-tile[data-category="tea"] img{object-fit:contain;padding:10px 12px 30px}
+.club-photo{background-image:linear-gradient(0deg,#120c0ce6,#26171233),url('arabica-v2.webp')}
 /* Reference CTA: heart on left and navigation arrow on right. */
 .ref-cta{direction:ltr}
 .ref-cta>span:not(.ref-heart){direction:rtl}

@@ -1,4 +1,4 @@
-import { categories, flatDrinks, defaults } from './data.js';
+import { categories, flatDrinks, defaults } from './data.js?v=cups-2';
 import { createBackend } from './backend.js';
 
 const ICONS = {
@@ -122,7 +122,7 @@ function intro(kicker, title, description) {
   return `<div class="page-hero shell"><div class="page-intro"><span class="eyebrow">${esc(kicker)}</span><h1>${title}</h1><p class="lead">${esc(description)}</p></div></div>`;
 }
 function renderHome() {
-  const catCards = categories.map(c => `<a href="drinks.html#${c.id}" class="category-tile">${img(c.photo, c.fa)}<span class="count">${n(c.items.length)} نوشیدنی</span><b>${esc(c.fa)}</b><small dir="ltr">${esc(c.en)}</small></a>`).join('');
+  const catCards = categories.map(c => `<a href="drinks.html#${c.id}" class="category-tile" data-category="${c.id}">${img(c.photo, c.fa)}<span class="count">${n(c.items.length)} نوشیدنی</span><b>${esc(c.fa)}</b><small dir="ltr">${esc(c.en)}</small></a>`).join('');
   setMain(`<section class="hero hero-reference">
     <div class="ref-top-art" aria-hidden="true"><img class="ref-beans" src="assets/hero-beans.webp" alt=""><img class="ref-rome" src="assets/hero-colosseum.webp" alt=""></div>
     <div class="ref-brand"><img src="assets/logo.svg" alt="UniCafe - Tiam Vending Company"><span class="ref-flag" aria-hidden="true"><i></i><i></i><i></i></span></div>
@@ -132,7 +132,7 @@ function renderHome() {
       <a href="contact.html#message" class="ref-shortcut">${icon('chat',30)}<span>پیام ناشناس<br>به ما</span></a>
       <a href="about.html" class="ref-shortcut">${icon('info',30)}<span>درباره ما</span></a></div>
     </div>
-    <div class="ref-scene" aria-hidden="true"><div class="ref-wood"></div><div class="ref-handwriting">A cup<br><em>for a better day</em><span class="italy-stripe"></span></div><img class="ref-cup" src="assets/hero-cup.webp" alt=""><div class="ref-ground-beans"></div></div>
+    <div class="ref-scene" aria-hidden="true"><div class="ref-wood"></div><div class="ref-handwriting">A cup<br><em>for a better day</em><span class="italy-stripe"></span></div><img class="ref-cup" src="assets/cup-teal-v2.webp" alt="" width="768" height="1152" decoding="async"><div class="ref-ground-beans"></div></div>
   </section>
   <div class="shell"><section class="section"><div class="section-head"><div><span class="eyebrow">YOUR EXPERIENCE MATTERS</span><h2>همه‌چیز به سادگی یک لمس</h2></div></div>
     <div class="feature-grid">
@@ -155,7 +155,7 @@ function drinkCard(d) {
   const commentsOpen = state.openComments.has(d.code);
   const pct = d.total ? Math.round(d.likes / d.total * 100) : 0;
   return `<article class="drink-card compact-drink" data-code="${d.code}">
-    <div class="drink-compact-row"><div class="drink-thumb">${img(c.photo, d.name)}</div><span class="drink-code">${d.code}</span>
+    <div class="drink-compact-row"><div class="drink-thumb">${img(c.thumb, d.name)}</div><span class="drink-code">${d.code}</span>
       <div class="drink-name"><strong>${esc(d.name)}</strong></div>
       ${state.settings.polls_visible ? `<div class="compact-votes">
       <button class="vote like ${d.my_vote === 1 ? 'active' : ''}" data-vote="1" data-code="${d.code}" ${enabled ? '' : 'disabled'} aria-label="پسندیدن ${esc(d.name)}" aria-pressed="${d.my_vote === 1}">${icon('thumbsUp',21)}</button>

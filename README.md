@@ -5,17 +5,17 @@ Six Persian RTL pages built with static HTML, CSS, native JavaScript and local i
 ## Current deployment
 
 - GitHub repository: https://github.com/TheLouisMahdi/UniCafe.site
-- Temporary GitHub Pages address: `https://thelouismahdi.github.io/UniCafe.site/` (deployment verification is recorded in `DEPLOYMENT_STATUS.md`).
+- Verified live GitHub Pages address: https://thelouismahdi.github.io/UniCafe.site/ . HTTPS, published content, live voting, real admin sign-in and mobile layouts passed verification.
 - Every push to `main` runs the six tests, builds only public static files, deploys to Pages, and verifies every published asset and live public backend permissions.
 - The owner reports that the IRNIC nameservers were saved; the purchased domain is still awaiting activation. No custom domain is attached to GitHub Pages, so it works independently of registration.
 
 - Cloudflare account: `8ddfca6c622149bac5bb6a4af708e7a0`
 - Pages project: `unicafe-znu`
 - Published Pages hostname: `https://unicafe-znu.pages.dev/`
-- Deployment: `07bdbc3f` (Cloudflare reported successful publication).
+- Initial Cloudflare deployment: `07bdbc3f`. GitHub Pages is now the active temporary host with the latest changes.
 - Supabase project: `wqxichsticiklqhutpzx`, organization `hdezenphttwrlicbtqyx`, region Mumbai (`ap-south-1`).
 - Intended official domain: `unicafeznu.ir`. Registration/DNS/HTTPS activation are still being checked. Do not print a QR until the final hostname is verified.
-- The current network resolves Pages to a private filtering address; browser verification of the published hostname is not complete. A successful upload must not be confused with a verified public visit.
+- The current network previously blocked the Cloudflare Pages hostname. The GitHub Pages hostname is reachable and has been verified in the browser and over normal HTTPS.
 
 ## Public access and privacy
 
@@ -56,6 +56,6 @@ GitHub Actions publishes only `dist/`. For a manual GitHub build, use `SITE_BASE
 
 `node scripts/live-check.mjs` tests the real public backend with two independent random identifiers and removes its own test votes. It requires voting/results to be enabled. It checks direct-table denial and public denial of privileged RPCs.
 
-The six pages have been checked at 320, 360, 390 and 430px. The real backend has been tested through browser UI and direct RPCs. Printing, native phone dialer launch, custom-domain HTTPS and final QR must be verified after domain activation. See `DEPLOYMENT_STATUS.md` for the final handoff status.
+All six published GitHub pages have been checked at 320, 360, 390 and 430px. The real backend has been tested through browser UI and direct RPCs. Printing, native phone dialer launch, custom-domain HTTPS and final QR must be verified after domain activation. See `DEPLOYMENT_STATUS.md` for the final handoff status.
 
 Support contacts remain Bahram Imani **09197489913** and Mehdi Ghahremani **09016688302**, with tel links and copy buttons.

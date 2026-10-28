@@ -16,7 +16,9 @@ async function get(path, status = 200) {
 for (const name of ['index.html','drinks.html','about.html','club.html','contact.html','admin.html','404.html', ...(await readdir(new URL('../dist/assets/', import.meta.url))).map(n => `assets/${n}`)]) {
   const actual = await get(name);
   const expected = await readFile(new URL(`../dist/${name}`, import.meta.url));
-  assert.equal(digest(actual), digest(expected), `Deployed content differs: ${name}`);
+  // Git can check text out with CRLF on Windows and LF on the Linux runner.
+  const comparable = bytes => /\.(html|js|css|svg)$/.test(name) ? Buffer.from(bytes.toString('utf8').replaceAll('\r\n','\n')) : bytes;
+  assert.equal(digest(comparable(actual)), digest(comparable(expected)), `Deployed content differs: ${name}`);
   console.log(`HTTPS/content PASS ${name}`);
 }
 const missing = (await get('missing-qa-page', 404)).toString();

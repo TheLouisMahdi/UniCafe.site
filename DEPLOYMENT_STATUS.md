@@ -1,5 +1,11 @@
 # UniCafe go-live status — 2026-10-28
 
+## Confirmed temporary live site
+
+**https://thelouismahdi.github.io/UniCafe.site/** is live and verified over normal HTTPS. Source: https://github.com/TheLouisMahdi/UniCafe.site . The owner requested GitHub hosting while the purchased domain is inactive. The same real Supabase backend serves this site.
+
+Admin: https://thelouismahdi.github.io/UniCafe.site/admin.html . Sign in with `poimu80@gmail.com` and the password already supplied by the owner. No password is written here or shipped to visitors.
+
 ## Completed
 
 - Preserved the existing six-page static Persian RTL implementation, the 24 exact menu entries and order, original About story and real machine photos.
@@ -27,20 +33,28 @@
 
 All temporary votes, comments, club membership, the support message and drawing-history row were removed. The authenticated live backend confirmed zero votes, comments, members, messages and draws after cleanup. Public switches were restored to enabled.
 
-## External blockers / not yet verified
+## Official domain and remaining verification limits
 
 1. IRNIC reports `unicafeznu.ir` as paid, reserved and awaiting domain approval. Public NS lookup returned NXDOMAIN. This is not a second payment requirement.
 2. The owner reports that the IRNIC DNS form was saved. Saved delegation and domain activation still require independent verification. No security-question answer is stored in project files.
 3. The present network resolves the Pages hostname to private address `10.10.34.35`. Public DNS-over-HTTPS returned Cloudflare A records, but an HTTPS request using those records failed at the network/TLS layer. TLS validation was not disabled; no computer DNS/proxy settings were changed.
-4. Root/www Pages domain attachment, active DNS delegation, public HTTPS, redirects if needed, and production browser verification remain to be finished after the relevant external state permits them.
+4. Root/www Cloudflare Pages domain attachment, active DNS delegation, and official-domain HTTPS remain to be finished after domain approval. GitHub Pages HTTPS and production browser verification have now succeeded independently of these blockers.
 5. No final QR has been generated. Generate the PNG/SVG only after the final official HTTPS hostname is verified. The existing QR generator preserves a white quiet zone.
 6. Native phone dialer launch and a physical printed QR scan have not been verified on a phone.
 7. The in-app browser's native confirmation stalled a draw UI test. The live draw API and history were independently verified through authenticated RPCs. This does not establish completion of that UI confirmation path.
 
 ## GitHub Pages deployment
 
-At the owner's request, GitHub Pages is the temporary hosting target while the official domain awaits activation. Repository: https://github.com/TheLouisMahdi/UniCafe.site . Intended Pages URL: https://thelouismahdi.github.io/UniCafe.site/ . A workflow tests, builds, deploys and checks actual published assets plus the real shared Supabase backend. GitHub activation and live verification are in progress. The latest build includes CSV hardening. No production password, private key or JWT is included.
+At the owner's request, GitHub Pages is the temporary hosting target while the official domain awaits activation. Repository: https://github.com/TheLouisMahdi/UniCafe.site . Verified URL: https://thelouismahdi.github.io/UniCafe.site/ . GitHub Pages is configured for workflow deployment and HTTPS is enforced. No CNAME ties this temporary site to the inactive domain.
+
+Workflow https://github.com/TheLouisMahdi/UniCafe.site/actions/runs/40663222354 completed successfully: build, deploy and verify. The latest build includes CSV hardening. No production password, private key or JWT is included.
+
+Published-host checks passed both on the GitHub runner and from this environment: all six pages, the custom 404 and every public image/CSS/JS asset match the expected build over HTTPS; exact real 24-product catalog; public denial of admin RPCs and all private tables. The comparison ignores only Git's platform-specific CRLF/LF conversion in text files.
+
+Additional production browser checks: initial no-login public access, real like/add/switch/remove, correct public totals, real owner admin sign-in, dashboard connection and zero QA records, logout, and all six pages at 320/360/390/430px without overflow or broken loaded images. The API smoke test independently exercised two random browser IDs and removed its votes. Existing live moderation, comments, messages, consent/privacy and drawing checks listed above apply to the same backend. No new disposable club/comment/message records were needed for this host change.
+
+Proof files: `artifacts/github-live-mobile.png`, `artifacts/github-responsive.json`, and `artifacts/github-verification.log` (ignored local artifacts). QR generation for the final official domain remains deferred until that domain is active and verified.
 
 ## Resume
 
-Confirm the IRNIC DNS form was saved; verify the domain detail now shows the assigned Cloudflare nameservers. Finish root and www attachment in the existing Pages project, check delegation and HTTPS with normal certificate verification, run the published-site checks and generate the final QR. Update this status file. Do not recreate the Cloudflare or Supabase projects.
+GitHub hosting is complete. When the official domain activates, verify the domain detail now shows the assigned Cloudflare nameservers. Finish root and www attachment in the existing Pages project, check delegation and HTTPS with normal certificate verification, run the published-site checks and generate the final QR. Update this status file. Do not recreate the Cloudflare or Supabase projects.

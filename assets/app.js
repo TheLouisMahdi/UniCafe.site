@@ -190,7 +190,6 @@ function renderDrinks() {
     <div class="shell"><div class="controls"><label class="search">${icon('search')}<input id="drink-search" type="search" placeholder="جست‌وجو با نام یا کد نوشیدنی" value="${esc(state.query)}" aria-label="جست‌وجوی نوشیدنی"></label><span class="tag">${n(state.catalog.filter(d=>d.is_visible).length)} نوشیدنی</span></div>
     <div class="chips" aria-label="فیلتر دسته‌ها">${chips}</div><div id="drink-groups">${groups || '<div class="no-results">نوشیدنی‌ای پیدا نشد.</div>'}</div>
     <section id="leaderboard">${leaderboard()}</section>
-    ${note('هر مرورگر یک رأی قابل‌تغییر برای هر نوشیدنی دارد. پاک‌کردن داده‌های مرورگر یا استفاده از دستگاه دیگر، شناسهٔ تازه می‌سازد؛ این روش تضمین یک نفر، یک رأی نیست.')}
     </div>`);
   const search = document.getElementById('drink-search');
   search.addEventListener('input', e => {

@@ -41,8 +41,8 @@ body.menu-open{overflow:hidden}
 .ref-heart svg{fill:#d72b2e;stroke:#d72b2e}
 .ref-cta>svg{transform:scaleX(-1);color:#ffd39d}
 .ref-shortcuts{width:100%;margin-top:24px;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
-.ref-shortcut{display:flex;align-items:center;justify-content:flex-start;flex-direction:column;min-height:135px;border:1px solid #c08b5378;background:linear-gradient(140deg,#1b0e0ac7,#100905cf);border-radius:16px;color:#fff7ed;gap:10px;padding:19px 6px 13px;font-size:.91rem;font-weight:700;line-height:1.55;transition:background .2s,transform .2s}
-.ref-shortcut:hover{background:#3a2214c9;transform:translateY(-3px)}
+.ref-shortcut{display:flex;align-items:center;justify-content:flex-start;flex-direction:column;min-height:135px;border:0;background:none;border-radius:0;color:#fff7ed;gap:10px;padding:19px 6px 13px;font-size:.91rem;font-weight:700;line-height:1.55;transition:background .2s,transform .2s}.ref-shortcut+.ref-shortcut{border-inline-end:1px solid #e1b46f26}
+.ref-shortcut:hover{transform:translateY(-3px)}
 .ref-shortcut svg{width:35px;height:35px;color:var(--gold);stroke-width:1.65}
 .ref-scene{position:relative;flex:1;min-height:310px;width:100%;margin-top:-10px;overflow:hidden;isolation:isolate}
 .ref-scene:before{content:"";position:absolute;inset:0;z-index:-2;background:radial-gradient(ellipse 58% 45% at 70% 75%,#94430b69,transparent 90%),radial-gradient(ellipse 60% 60% at 30% 100%,#3a1d0b,transparent 80%)}
@@ -52,8 +52,7 @@ body.menu-open{overflow:hidden}
 .ref-cup{position:absolute;z-index:2;width:235px;height:340px;object-fit:contain;bottom:-25px;right:calc(50% - 250px);filter:drop-shadow(10px 12px 23px #000e) brightness(1.12) saturate(1.12)}
 .ref-ground-beans{position:absolute;z-index:1;right:calc(50% - 330px);bottom:-130px;width:470px;height:230px;transform:rotate(-90deg);background:url('hero-beans.webp') center/cover;mask-image:radial-gradient(ellipse at center,#000 30%,transparent 70%);opacity:.79}
 /* More graphic homepage cards */
-.feature-card,.spotlight,.glass,.support-person{background:radial-gradient(circle at 110% -50%,#713a1760,transparent 85%),linear-gradient(145deg,#25150d,#0e0906);border:1px solid #c38b4d70;box-shadow:inset 0 1px #fff1d90b,0 18px 40px #0004}
-.category-tile{border-color:#c28c4e84}
+.glass{background:radial-gradient(circle at 110% -50%,#713a1760,transparent 85%),linear-gradient(145deg,#25150d,#0e0906);border:1px solid #c38b4d70;box-shadow:inset 0 1px #fff1d90b,0 18px 40px #0004}
 /* Vote page: compact rows, inline green/red touch targets like the design image */
 .poll-reference-head{padding-top:34px;display:flex;align-items:center;justify-content:center;gap:16px;max-width:690px}
 .poll-reference-head h1{font-size:clamp(1.2rem,2.6vw,1.9rem);font-weight:800;color:#fff5e8;letter-spacing:0;text-align:center;margin:0}
@@ -97,7 +96,6 @@ body[data-page="drinks"] .notice{font-size:.8rem}
 .reference-subhead h1{font-size:clamp(1.6rem,3vw,2.4rem);margin:0 0 4px}
 .reference-subhead p{font-size:.91rem;margin:0}
 body[data-page="contact"] .support-layout{padding-top:15px}
-body[data-page="contact"] .support-person{background:#170e0a;border-color:#d69e576e}
 body[data-page="contact"] .support-person-head{color:#ffdfa6}
 body[data-page="contact"] .support-buttons .btn{border-radius:12px}
 body[data-page="contact"] .support-buttons .call-action{background:linear-gradient(145deg,#138944,#0d592f);color:#fff;border:1px solid #2ba45b}
@@ -132,7 +130,7 @@ body[data-page="about"] .story-photo,body[data-page="club"] .club-photo{border:1
  .ref-cta{min-height:57px;padding:6px 12px;gap:6px;font-size:.94rem;border-radius:99px}
  .ref-heart{width:42px;height:42px;flex-shrink:0}.ref-cta>svg{width:18px}
  .ref-shortcuts{margin-top:22px;gap:8px}
- .ref-shortcut{min-height:119px;gap:9px;border-radius:13px;font-size:.8rem;padding:15px 4px 10px;line-height:1.5}
+ .ref-shortcut{min-height:119px;gap:9px;border-radius:0;font-size:.8rem;padding:15px 4px 10px;line-height:1.5}
  .ref-shortcut svg{width:30px;height:30px}
  .ref-scene{min-height:240px;flex:1;margin-top:0}
  .ref-cup{width:190px;height:276px;right:2%;bottom:-8px}

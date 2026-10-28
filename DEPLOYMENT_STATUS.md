@@ -16,7 +16,7 @@
 
 ## Tests passed
 
-- `npm test`: 5/5 tests. Includes exact menu/content checks plus executable PostgreSQL tests covering role grants, table denial, vote changes/removal, comment moderation, visibility switches, consent, privacy, verified-only administration, draws, duplicate winners and deletion.
+- `npm test`: 6/6 tests, including CSV formula-injection protection. Includes exact menu/content checks plus executable PostgreSQL tests covering role grants, table denial, vote changes/removal, comment moderation, visibility switches, consent, privacy, verified-only administration, draws, duplicate winners and deletion.
 - `npm run build`: success; only static public assets included. Missing configuration and private keys are rejected by the build.
 - Real public API smoke test with two independent browser UUIDs: add, switch and remove vote; totals; private-table denial; admin RPC denial. Its votes were removed.
 - Browser UI on the local static files connected to the real production database: all six pages; widths 320/360/390/430; 24 menu cards; mobile navigation; number-copy controls; real Auth admin login; public vote changes/removal; pending comment; manager approval; public approved comment; private anonymous message; club consent requirement and successful signup.
@@ -30,12 +30,16 @@ All temporary votes, comments, club membership, the support message and drawing-
 ## External blockers / not yet verified
 
 1. IRNIC reports `unicafeznu.ir` as paid, reserved and awaiting domain approval. Public NS lookup returned NXDOMAIN. This is not a second payment requirement.
-2. Both assigned nameservers have been entered into IRNIC's DNS form, but the form requires the owner's security-question answer before saving. The user has been asked to enter the answer in the browser, never in chat. Until save is confirmed, the registered nameservers remain `ns1.parspack.co` / `ns2.parspack.co`.
+2. The owner reports that the IRNIC DNS form was saved. Saved delegation and domain activation still require independent verification. No security-question answer is stored in project files.
 3. The present network resolves the Pages hostname to private address `10.10.34.35`. Public DNS-over-HTTPS returned Cloudflare A records, but an HTTPS request using those records failed at the network/TLS layer. TLS validation was not disabled; no computer DNS/proxy settings were changed.
 4. Root/www Pages domain attachment, active DNS delegation, public HTTPS, redirects if needed, and production browser verification remain to be finished after the relevant external state permits them.
 5. No final QR has been generated. Generate the PNG/SVG only after the final official HTTPS hostname is verified. The existing QR generator preserves a white quiet zone.
 6. Native phone dialer launch and a physical printed QR scan have not been verified on a phone.
 7. The in-app browser's native confirmation stalled a draw UI test. The live draw API and history were independently verified through authenticated RPCs. This does not establish completion of that UI confirmation path.
+
+## GitHub Pages deployment
+
+At the owner's request, GitHub Pages is the temporary hosting target while the official domain awaits activation. Repository: https://github.com/TheLouisMahdi/UniCafe.site . Intended Pages URL: https://thelouismahdi.github.io/UniCafe.site/ . A workflow tests, builds, deploys and checks actual published assets plus the real shared Supabase backend. GitHub activation and live verification are in progress. The latest build includes CSV hardening. No production password, private key or JWT is included.
 
 ## Resume
 

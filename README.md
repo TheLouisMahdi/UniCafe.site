@@ -4,6 +4,11 @@ Six Persian RTL pages built with static HTML, CSS, native JavaScript and local i
 
 ## Current deployment
 
+- GitHub repository: https://github.com/TheLouisMahdi/UniCafe.site
+- Temporary GitHub Pages address: `https://thelouismahdi.github.io/UniCafe.site/` (deployment verification is recorded in `DEPLOYMENT_STATUS.md`).
+- Every push to `main` runs the six tests, builds only public static files, deploys to Pages, and verifies every published asset and live public backend permissions.
+- The owner reports that the IRNIC nameservers were saved; the purchased domain is still awaiting activation. No custom domain is attached to GitHub Pages, so it works independently of registration.
+
 - Cloudflare account: `8ddfca6c622149bac5bb6a4af708e7a0`
 - Pages project: `unicafe-znu`
 - Published Pages hostname: `https://unicafe-znu.pages.dev/`
@@ -41,7 +46,7 @@ npm run build
 node scripts/live-check.mjs
 ```
 
-Upload only `dist/` to the existing Cloudflare Pages project. Do not upload the source root, SQL, tests, node_modules or private account material. The browser runtime has no third-party JavaScript or font dependency. Node/PGlite are development-only.
+GitHub Actions publishes only `dist/`. For a manual GitHub build, use `SITE_BASE_PATH=/UniCafe.site/` for the custom 404 links. Ordinary page and asset links work under either a subdirectory or the domain root. GitHub Pages ignores Cloudflare `_headers`; the HTML also sets a content security policy. Cloudflare remains prepared for the official domain. Upload only `dist/` to the existing Cloudflare Pages project. Do not upload the source root, SQL, tests, node_modules or private account material. The browser runtime has no third-party JavaScript or font dependency. Node/PGlite are development-only.
 
 `supabase/schema.sql` is the tested initial schema for a new, empty project. It has been applied to UniCafe. Do not apply it to an unrelated project or an old schema that still uses Auth IDs for public records. Future production changes should be explicit migrations.
 

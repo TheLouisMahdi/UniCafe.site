@@ -535,7 +535,7 @@ async function saveSettings(form) {
 }
 function downloadCsv(members) {
   const headers=['name','phone','telegram','registered_at'];
-  const row = arr => arr.map(v=>`"${String(v ?? '').replace(/^[=+@-]/,'\' $&').replace(/"/g,'""')}"`).join(',');
+  const row = arr => arr.map(v=>`"${String(v ?? '').replace(/^[\s\u0000-\u001f\uFEFF]*[=+@-]/,'\' $&').replace(/"/g,'""')}"`).join(',');
   const csv='\ufeff'+[headers,...members.map(m=>[m.full_name,m.phone,m.telegram_id,m.created_at])].map(row).join('\r\n');
   const url=URL.createObjectURL(new Blob([csv],{type:'text/csv;charset=utf-8;'}));
   const a=document.createElement('a');a.href=url;a.download='unicafe-club.csv';a.click();URL.revokeObjectURL(url);

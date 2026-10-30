@@ -1,4 +1,14 @@
-# UniCafe go-live status — 2026-10-28
+# UniCafe deployment status
+
+## Network repair — 2026-10-30 (supersedes historical host/domain notes below)
+
+- Official domain `https://unicafeznu.ir/` is active on GitHub Pages, with a newly approved certificate for apex/`www` and HTTPS enforcement enabled. HTTP and `www` redirect to the HTTPS apex.
+- Worker `unicafe-api` is live at `https://api.unicafeznu.ir` and `https://unicafe-api.ghahremani-znjm.workers.dev`. Browser health probes choose a reachable endpoint before any write; database authorization stays unchanged. Active dashboard Worker version after adding the mirror origin: `6ea30dbe`.
+- Cloudflare Pages mirror `https://unicafe-znu.pages.dev/` was updated from the same public build. It is the alternate URL for the currently tested VPN, which drops TLS to Iranian domains (also reproduced on an unrelated `.ir` host).
+- `npm test`: 11/11 passed. Live vote add/switch/remove and permission checks passed through the new API; test votes were removed. GitHub workflow https://github.com/TheLouisMahdi/UniCafe.site/actions/runs/41098351658 passed build/deploy/full published-host verification for commit `4282bf3`.
+- No data/schema migration, new private credential, billed upgrade, DNS delegation change or local VPN/network-setting change was needed. See `NETWORK_OPERATIONS.md` for operations and verification limits.
+
+## Historical go-live status — 2026-10-28
 
 ## Confirmed temporary live site
 

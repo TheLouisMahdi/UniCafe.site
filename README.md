@@ -4,18 +4,14 @@ Six Persian RTL pages built with static HTML, CSS, native JavaScript and local i
 
 ## Current deployment
 
-- GitHub repository: https://github.com/TheLouisMahdi/UniCafe.site
-- Verified live GitHub Pages address: https://thelouismahdi.github.io/UniCafe.site/ . HTTPS, published content, live voting, real admin sign-in and mobile layouts passed verification.
-- Every push to `main` runs the six tests, builds only public static files, deploys to Pages, and verifies every published asset and live public backend permissions.
-- The owner reports that the IRNIC nameservers were saved; the purchased domain is still awaiting activation. No custom domain is attached to GitHub Pages, so it works independently of registration.
-
-- Cloudflare account: `8ddfca6c622149bac5bb6a4af708e7a0`
-- Pages project: `unicafe-znu`
-- Published Pages hostname: `https://unicafe-znu.pages.dev/`
-- Initial Cloudflare deployment: `07bdbc3f`. GitHub Pages is now the active temporary host with the latest changes.
-- Supabase project: `wqxichsticiklqhutpzx`, organization `hdezenphttwrlicbtqyx`, region Mumbai (`ap-south-1`).
-- Intended official domain: `unicafeznu.ir`. Registration/DNS/HTTPS activation are still being checked. Do not print a QR until the final hostname is verified.
-- The current network previously blocked the Cloudflare Pages hostname. The GitHub Pages hostname is reachable and has been verified in the browser and over normal HTTPS.
+- Official site: https://unicafeznu.ir/ on GitHub Pages. Domain activation is complete. Its certificate covers the apex and `www`; HTTPS enforcement is enabled and HTTP redirects to HTTPS.
+- VPN mirror: https://unicafe-znu.pages.dev/ on the existing Cloudflare Pages project. Both hosts use the same production database. The current VPN drops TLS to Iranian domains, including unrelated `.ir` sites; its non-IR mirror and API endpoint work. This is a measured network limitation, not a guarantee about all VPNs or ISPs.
+- Repository: https://github.com/TheLouisMahdi/UniCafe.site . Every push to `main` runs the tests, builds only public static files, deploys the official site, and verifies all published assets and public backend permissions. The Pages mirror is a direct-upload project and must be updated separately from the same `dist/` build.
+- Browser API endpoints: `https://api.unicafeznu.ir` and `https://unicafe-api.ghahremani-znjm.workers.dev`. Read-only health probes select a reachable endpoint before sending any action. Writes are never automatically replayed across endpoints.
+- Cloudflare Worker: `unicafe-api`; source/config in `worker/`. It forwards only explicitly allowed RPC/Auth paths to the fixed Supabase project, using the existing public key and optional admin JWT. RLS and admin authorization remain enforced in PostgreSQL. Responses are not cached; no private/service-role key is used.
+- Cloudflare account: `8ddfca6c622149bac5bb6a4af708e7a0`; Pages project: `unicafe-znu`.
+- Supabase project: `wqxichsticiklqhutpzx`, organization `hdezenphttwrlicbtqyx`, region Mumbai (`ap-south-1`). No database migration or relocation was needed.
+- See `NETWORK_OPERATIONS.md` for network diagnostics and future deployments. Historical deployment notes in `DEPLOYMENT_STATUS.md` are superseded by its 2026-10-30 update.
 
 ## Public access and privacy
 
@@ -46,7 +42,7 @@ npm run build
 node scripts/live-check.mjs
 ```
 
-GitHub Actions publishes only `dist/`. For a manual GitHub build, use `SITE_BASE_PATH=/UniCafe.site/` for the custom 404 links. Ordinary page and asset links work under either a subdirectory or the domain root. GitHub Pages ignores Cloudflare `_headers`; the HTML also sets a content security policy. Cloudflare remains prepared for the official domain. Upload only `dist/` to the existing Cloudflare Pages project. Do not upload the source root, SQL, tests, node_modules or private account material. The browser runtime has no third-party JavaScript or font dependency. Node/PGlite are development-only.
+GitHub Actions publishes only `dist/`, using `SITE_BASE_PATH=/` for the official domain. GitHub Pages ignores Cloudflare `_headers`; HTML also sets a content security policy. Upload only `dist/` to the existing Cloudflare Pages mirror. Do not upload the source root, SQL, tests, node_modules or private account material. Deploy the API Worker separately; it is deliberately excluded from `dist/`. The browser runtime has no third-party JavaScript or font dependency. Node/PGlite are development-only.
 
 `supabase/schema.sql` is the tested initial schema for a new, empty project. It has been applied to UniCafe. Do not apply it to an unrelated project or an old schema that still uses Auth IDs for public records. Future production changes should be explicit migrations.
 

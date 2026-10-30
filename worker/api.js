@@ -4,7 +4,6 @@ const PUBLIC_KEY = 'sb_publishable_07suK4K6q-vF_AKjhEuJ6A_oiV1uOB3';
 const ORIGINS = new Set([
   'https://unicafeznu.ir', 'https://www.unicafeznu.ir',
   'https://thelouismahdi.github.io',
-  'https://unicafe-znu.pages.dev',
   'http://localhost:8000', 'http://127.0.0.1:8000'
 ]);
 const RPCS = new Set([
@@ -88,3 +87,4 @@ export async function handleRequest(request, upstreamFetch = fetch) {
 }
 
 export default {fetch: request => handleRequest(request)};
+ORIGINS.add('https://unicafe-znu.pages.dev');

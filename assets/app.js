@@ -60,6 +60,7 @@ function demoCatalog() {
   };
 }
 function renderShell() {
+  const credit = document.getElementById('site-credit');
   const links = [ ['index', 'خانه', 'home'], ['drinks', 'نوشیدنی‌ها', 'cup'], ['about', 'داستان ما', 'info'], ['club', 'باشگاه ویژه', 'gift'], ['contact', 'پشتیبانی', 'support'] ];
   const nav = links.map(([id, title]) => `<a href="${id}.html" class="${page === id ? 'active' : ''}" ${page === id ? 'aria-current="page"' : ''}>${esc(title)}</a>`).join('');
   const bottomNav = links.map(([id, title, ico]) => `<a href="${id}.html" class="${page === id ? 'active' : ''}" ${page === id ? 'aria-current="page"' : ''}>${icon(ico)}<span>${esc(title)}</span></a>`).join('');
@@ -82,6 +83,7 @@ function renderShell() {
     </div><div class="footer-bottom"><span>UniCafe · Italian Coffee Style</span><span>کتابخانه دانشگاه زنجان · از ۱۴۰۱ کنار شما</span></div></div></footer>
     <nav class="bottom-nav" aria-label="ناوبری موبایل">${bottomNav}</nav>
     <div id="toast" class="toast" role="status" aria-live="polite"></div>`;
+  if (credit) document.querySelector('.footer > .shell').append(credit);
 }
 let toastTimer;
 function toast(msg, error = false) {

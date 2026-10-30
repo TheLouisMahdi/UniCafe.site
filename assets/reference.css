@@ -182,3 +182,8 @@ body[data-page="about"] .story-photo,body[data-page="club"] .club-photo{border:1
 /* Reference CTA: heart on left and navigation arrow on right. */
 .ref-cta{direction:ltr}
 .ref-cta>span:not(.ref-heart){direction:rtl}
+.developer-credit{margin:16px 0 0;text-align:left;font-size:.75rem;line-height:1.9;color:var(--muted);overflow-wrap:anywhere}
+.developer-credit a{color:var(--gold);text-underline-offset:4px}
+.developer-credit a:hover{text-decoration:underline}
+.developer-credit a:focus-visible{outline:2px solid var(--gold);outline-offset:4px;border-radius:3px}
+.developer-credit bdi{font-size:.9em}

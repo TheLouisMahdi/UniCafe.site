@@ -25,7 +25,7 @@ jobs:
       - run: npm test
       - run: npm run build
         env:
-          SITE_BASE_PATH: /UniCafe.site/
+          SITE_BASE_PATH: /
       - uses: actions/upload-pages-artifact@v4
         with:
           path: dist
@@ -54,5 +54,5 @@ jobs:
           node-version: '22'
       - run: npm run build
         env:
-          SITE_BASE_PATH: /UniCafe.site/
-      - run: node scripts/check-deployment.mjs https://thelouismahdi.github.io/UniCafe.site/
+          SITE_BASE_PATH: /
+      - run: node scripts/check-deployment.mjs https://unicafeznu.ir/

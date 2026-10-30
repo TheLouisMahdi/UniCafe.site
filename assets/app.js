@@ -1,5 +1,5 @@
 import { categories, flatDrinks, defaults } from './data.js?v=cups-2';
-import { createBackend } from './backend.js';
+import { createBackend } from './backend.js?v=network-3';
 
 const ICONS = {
   home: '<path d="m3 10 9-7 9 7v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22v-8h6v8"/>',

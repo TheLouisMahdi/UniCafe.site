@@ -26,8 +26,9 @@ assert.ok(missing.includes('UniCafe'));
 const context = {window:{}};
 vm.runInNewContext((await get('assets/config.js')).toString(), context);
 const cfg = context.window.UNICAFE_CONFIG;
+const apiUrl = cfg.apiUrl || cfg.supabaseUrl;
 async function rpc(name, args = {}, allowed = true) {
-  const response = await fetch(`${cfg.supabaseUrl}/rest/v1/rpc/${name}`, {method:'POST', headers:{apikey:cfg.supabaseAnonKey,'Content-Type':'application/json'}, body:JSON.stringify(args), signal:AbortSignal.timeout(30000)});
+  const response = await fetch(`${apiUrl}/rest/v1/rpc/${name}`, {method:'POST', headers:{Origin:base.origin,apikey:cfg.supabaseAnonKey,'Content-Type':'application/json'}, body:JSON.stringify(args), signal:AbortSignal.timeout(30000)});
   assert.equal(response.ok, allowed, `${name}: ${response.status}`);
   return response.json();
 }
@@ -36,7 +37,7 @@ assert.deepEqual(catalog.drinks.map(d => [d.code,d.name]), flatDrinks.map(d => [
 await rpc('admin_data', {}, false);
 await rpc('admin_draw_winner', {}, false);
 for (const table of ['club_members','anonymous_messages','admin_users','votes']) {
-  const response = await fetch(`${cfg.supabaseUrl}/rest/v1/${table}?select=*`, {headers:{apikey:cfg.supabaseAnonKey}, signal:AbortSignal.timeout(30000)});
+  const response = await fetch(`${apiUrl}/rest/v1/${table}?select=*`, {headers:{apikey:cfg.supabaseAnonKey}, signal:AbortSignal.timeout(30000)});
   assert.ok(!response.ok, `Private table exposed: ${table}`);
 }
 console.log('PASS: all six published pages/assets match the build over HTTPS, custom 404, exact live catalog, private data/admin denied publicly.');

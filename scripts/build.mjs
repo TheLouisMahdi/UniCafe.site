@@ -9,6 +9,8 @@ if (!/^https:\/\/[a-z0-9]+\.supabase\.co$/.test(cfg.supabaseUrl) || !cfg.supabas
   throw new Error('Production build requires a real Supabase URL and public key.');
 }
 if (cfg.supabaseAnonKey.startsWith('sb_secret_')) throw new Error('Private key rejected');
+if (cfg.apiUrl && cfg.apiUrl !== 'https://api.unicafeznu.ir') throw new Error('Unexpected API proxy origin');
+if (cfg.apiFallbackUrl && cfg.apiFallbackUrl !== 'https://unicafe-api.ghahremani-znjm.workers.dev') throw new Error('Unexpected fallback API origin');
 if (cfg.supabaseAnonKey.startsWith('ey')) {
   const claims = JSON.parse(Buffer.from(cfg.supabaseAnonKey.split('.')[1], 'base64url'));
   if (claims.role !== 'anon') throw new Error('Only an anon or publishable key may be shipped');

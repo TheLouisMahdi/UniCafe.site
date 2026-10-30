@@ -6,8 +6,9 @@ import { flatDrinks } from '../assets/data.js';
 const scope={window:{}};
 vm.runInNewContext(await readFile(new URL('../assets/config.js',import.meta.url),'utf8'),scope);
 const cfg=scope.window.UNICAFE_CONFIG;
+const apiUrl=process.env.API_URL || cfg.apiUrl || cfg.supabaseUrl;
 async function call(name,args={},expectSuccess=true) {
- const r=await fetch(`${cfg.supabaseUrl}/rest/v1/rpc/${name}`,{method:'POST',headers:{apikey:cfg.supabaseAnonKey,'Content-Type':'application/json'},body:JSON.stringify(args)});
+ const r=await fetch(`${apiUrl}/rest/v1/rpc/${name}`,{method:'POST',headers:{Origin:'https://unicafeznu.ir',apikey:cfg.supabaseAnonKey,'Content-Type':'application/json'},body:JSON.stringify(args),signal:AbortSignal.timeout(20000)});
  const text=await r.text(); const d=text ? JSON.parse(text) : null;
  if(expectSuccess) assert.ok(r.ok, `${name}: ${r.status} ${d?.message}`);
  else assert.ok(!r.ok, `${name} unexpectedly allowed`);
@@ -19,7 +20,7 @@ const initial=await get(b);
 assert.deepEqual(initial.drinks.map(d=>[d.code,d.name]),flatDrinks.map(d=>[d.code,d.name]));
 assert.ok(!JSON.stringify(initial).includes('browser_id'));
 for(const table of ['club_members','anonymous_messages','admin_users','votes']) {
- const r=await fetch(`${cfg.supabaseUrl}/rest/v1/${table}?select=*`,{headers:{apikey:cfg.supabaseAnonKey}});
+ const r=await fetch(`${apiUrl}/rest/v1/${table}?select=*`,{headers:{apikey:cfg.supabaseAnonKey},signal:AbortSignal.timeout(20000)});
  assert.ok(!r.ok,`${table} exposed`);
 }
 await call('admin_data',{},false);

@@ -1,0 +1,9 @@
+{
+  "name": "unicafe-api",
+  "main": "api.js",
+  "compatibility_date": "2026-10-30",
+  "account_id": "8ddfca6c622149bac5bb6a4af708e7a0",
+  "workers_dev": true,
+  "routes": [{"pattern": "api.unicafeznu.ir", "custom_domain": true}],
+  "observability": {"enabled": false}
+}

@@ -1,7 +1,17 @@
 // Minimal Supabase HTTP client. Public actions never create Auth users.
-export function createBackend({ supabaseUrl, supabaseAnonKey }, storage = sessionStorage) {
-  const url = supabaseUrl.replace(/\/$/, '');
-  const key = `unicafe-admin:${url}`;
+export function createBackend({ supabaseUrl, supabaseAnonKey, apiUrl, apiFallbackUrl }, storage = sessionStorage) {
+  const url = (apiUrl || supabaseUrl).replace(/\/$/, '');
+  let endpoint;
+  const selectEndpoint = () => endpoint ||= (apiUrl && apiFallbackUrl
+    ? Promise.any([...new Set([url, apiFallbackUrl.replace(/\/$/, '')])].map(async candidate => {
+      const response = await fetch(`${candidate}/health`, {signal:AbortSignal.timeout(5000), cache:'no-store'});
+      const health = await response.json();
+      if (!response.ok || health.ok !== true || health.service !== 'unicafe-api') throw new Error('API unavailable');
+      return candidate;
+    })).catch(() => { throw new Error('اتصال به سرور برقرار نشد؛ کمی بعد دوباره تلاش کن.'); })
+    : Promise.resolve(url));
+  // Preserve admin sessions when changing the network endpoint.
+  const key = `unicafe-admin:${supabaseUrl.replace(/\/$/, '')}`;
   let current;
   try { current = JSON.parse(storage.getItem(key) || 'null'); } catch { current = null; }
   const persist = value => {
@@ -10,7 +20,10 @@ export function createBackend({ supabaseUrl, supabaseAnonKey }, storage = sessio
     else storage.removeItem(key);
   };
   async function request(path, body, token = null, method = 'POST') {
-    const response = await fetch(`${url}${path}`, {
+    // Select a reachable endpoint with read-only probes before any write.
+    // Never replay a vote, membership, comment or admin action on another host.
+    const selected = await selectEndpoint();
+    const response = await fetch(`${selected}${path}`, {
       method,
       headers: { apikey: supabaseAnonKey, 'Content-Type': 'application/json',
         ...(token ? { Authorization: `Bearer ${token}` } : {}) },

@@ -1,5 +1,5 @@
 import { categories, flatDrinks, defaults } from './data.js?v=cups-2';
-import { createBackend } from './backend.js?v=network-3';
+import { createBackend } from './backend.js?v=network-5';
 
 const ICONS = {
   home: '<path d="m3 10 9-7 9 7v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22v-8h6v8"/>',
@@ -235,9 +235,15 @@ async function vote(code, chosen, button) {
   try {
     if (live) { await rpc('vote_drink', { p_code: code, p_value: value }); }
     else { const all = stored('uc_votes', {}); all[code] = value; save('uc_votes', all); }
-    await loadCatalog(); updateDrinkList();
-    toast(value ? 'رأی شما ثبت شد. ممنون از همراهی‌ات!' : 'رأی شما برداشته شد.');
-  } catch (error) { button.disabled = false; toast(`ثبت رأی انجام نشد: ${error.message}`, true); }
+  } catch (error) {
+    button.disabled = false;
+    toast(`ثبت رأی تأیید نشد: ${error.message}`, true);
+    return;
+  }
+  d.my_vote = value;
+  toast(value ? 'رأی شما ثبت شد. ممنون از همراهی‌ات!' : 'رأی شما برداشته شد.');
+  try { await loadCatalog(); } catch { /* Keep the confirmed vote until the next refresh. */ }
+  updateDrinkList();
 }
 async function toggleComments(code) {
   if (state.openComments.has(code)) { state.openComments.delete(code); updateDrinkList(); return; }
@@ -618,10 +624,15 @@ async function main() {
     await loadCatalog();
     if(page==='drinks') {
       renderDrinks();
-      if(live) setInterval(async () => {
-        if(document.hidden || document.activeElement?.matches('input, textarea') || state.openComments.size) return;
-        try { await loadCatalog(); updateDrinkList(); } catch { /* retain last usable result */ }
-      }, 30000);
+      if (live) {
+        const refresh = async () => {
+          if (!document.hidden && !document.activeElement?.matches('input, textarea') && !state.openComments.size) {
+            try { await loadCatalog(); updateDrinkList(); } catch { /* Retain the last usable result. */ }
+          }
+          setTimeout(refresh, 60000 + Math.random() * 15000);
+        };
+        setTimeout(refresh, 60000 + Math.random() * 15000);
+      }
     }
     if(page==='club')renderClub();
     if(page==='contact') { renderContact(); if(location.hash === '#message') document.getElementById('message')?.scrollIntoView(); }

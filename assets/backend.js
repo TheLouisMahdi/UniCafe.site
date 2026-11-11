@@ -1,15 +1,21 @@
 // Minimal Supabase HTTP client. Public actions never create Auth users.
 export function createBackend({ supabaseUrl, supabaseAnonKey, apiUrl, apiFallbackUrl }, storage = sessionStorage) {
   const url = (apiUrl || supabaseUrl).replace(/\/$/, '');
+  const gateways = [...new Set([url, apiFallbackUrl?.replace(/\/$/, '')].filter(Boolean))];
+  const publicReads = new Set(['/rest/v1/rpc/public_catalog', '/rest/v1/rpc/get_public_comments']);
+  const unavailable = 'اتصال به سرور برقرار نشد؛ کمی بعد دوباره تلاش کن.';
   let endpoint;
-  const selectEndpoint = () => endpoint ||= (apiUrl && apiFallbackUrl
-    ? Promise.any([...new Set([url, apiFallbackUrl.replace(/\/$/, '')])].map(async candidate => {
+  let pendingSelection;
+  function selectEndpoint() {
+    if (endpoint || gateways.length === 1) return Promise.resolve(endpoint || url);
+    return pendingSelection ||= Promise.any(gateways.map(async candidate => {
       const response = await fetch(`${candidate}/health`, {signal:AbortSignal.timeout(5000), cache:'no-store'});
       const health = await response.json();
       if (!response.ok || health.ok !== true || health.service !== 'unicafe-api') throw new Error('API unavailable');
       return candidate;
-    })).catch(() => { throw new Error('اتصال به سرور برقرار نشد؛ کمی بعد دوباره تلاش کن.'); })
-    : Promise.resolve(url));
+    })).then(candidate => endpoint = candidate, () => { throw new Error(unavailable); })
+      .finally(() => { pendingSelection = undefined; });
+  }
   // Preserve admin sessions when changing the network endpoint.
   const key = `unicafe-admin:${supabaseUrl.replace(/\/$/, '')}`;
   let current;
@@ -20,19 +26,36 @@ export function createBackend({ supabaseUrl, supabaseAnonKey, apiUrl, apiFallbac
     else storage.removeItem(key);
   };
   async function request(path, body, token = null, method = 'POST') {
-    // Select a reachable endpoint with read-only probes before any write.
-    // Never replay a vote, membership, comment or admin action on another host.
-    const selected = await selectEndpoint();
-    const response = await fetch(`${selected}${path}`, {
+    const readOnly = !token && publicReads.has(path);
+    const candidates = readOnly ? [...new Set([endpoint, ...gateways].filter(Boolean))] : [await selectEndpoint()];
+    const init = {
       method,
       headers: { apikey: supabaseAnonKey, 'Content-Type': 'application/json',
         ...(token ? { Authorization: `Bearer ${token}` } : {}) },
       ...(method === 'GET' ? {} : { body: JSON.stringify(body) }),
-      signal: AbortSignal.timeout(15000), cache: 'no-store'
-    });
-    const data = await response.json().catch(() => null);
-    if (!response.ok) throw new Error(data?.msg || data?.message || data?.error_description || 'ارتباط با سرور برقرار نشد');
-    return data;
+      cache: 'no-store'
+    };
+    // Only the two public reads may try another gateway. A write may already have committed.
+    for (const candidate of candidates) {
+      let response, data;
+      try {
+        response = await fetch(`${candidate}${path}`, {
+          ...init, signal: AbortSignal.timeout(readOnly ? 4500 : 15000)
+        });
+        data = readOnly ? await response.json() : await response.json().catch(() => null);
+      } catch {
+        if (endpoint === candidate) endpoint = undefined;
+        continue;
+      }
+      if (response.status === 429 || response.status >= 500) {
+        if (endpoint === candidate) endpoint = undefined;
+        if (readOnly) continue;
+      }
+      if (!response.ok) throw new Error(data?.msg || data?.message || data?.error_description || unavailable);
+      if (readOnly) endpoint = candidate;
+      return data;
+    }
+    throw new Error(unavailable);
   }
   async function adminToken() {
     if (!current) return null;

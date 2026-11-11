@@ -28,7 +28,7 @@ test('unreachable primary falls back before a write and never replays a failed w
   const calls = [];
   globalThis.fetch = async (url) => {
     calls.push(url);
-    if (url === 'https://primary.invalid/health') throw new TypeError('blocked');
+    if (url === 'https://primary.invalid/health' && calls.length <= 2) throw new TypeError('blocked');
     if (url.endsWith('/health')) return Response.json({ok:true,service:'unicafe-api'});
     throw new TypeError('connection lost after write');
   };
@@ -36,5 +36,31 @@ test('unreachable primary falls back before a write and never replays a failed w
     const backend = createBackend({supabaseUrl:'https://example.supabase.co',apiUrl:'https://primary.invalid',apiFallbackUrl:'https://fallback.invalid',supabaseAnonKey:'public'},storage);
     assert.ok((await backend.rpc('vote_drink',{})).error);
     assert.deepEqual(calls.filter(url=>!url.endsWith('/health')), ['https://fallback.invalid/rest/v1/rpc/vote_drink']);
+    assert.ok((await backend.rpc('vote_drink',{})).error);
+    assert.equal(calls.filter(url => url.endsWith('/health')).length, 4);
+  } finally {globalThis.fetch = originalFetch;}
+});
+
+test('public reads start without probes and move to the reachable gateway after a route change', async () => {
+  const originalFetch = globalThis.fetch;
+  const storage = {getItem:()=>null,setItem:()=>{},removeItem:()=>{}};
+  const primary = 'https://primary.invalid';
+  const fallback = 'https://fallback.invalid';
+  const catalog = '/rest/v1/rpc/public_catalog';
+  const calls = [];
+  let primaryAvailable = true;
+  globalThis.fetch = async url => {
+    calls.push(url);
+    if (!primaryAvailable && url === primary + catalog) return Response.json({}, {status: 503});
+    return Response.json({drinks: []});
+  };
+  try {
+    const backend = createBackend({supabaseUrl:'https://example.supabase.co',apiUrl:primary,apiFallbackUrl:fallback,supabaseAnonKey:'public'},storage);
+    assert.equal((await backend.rpc('public_catalog',{})).error, null);
+    assert.deepEqual(calls, [primary + catalog]);
+    primaryAvailable = false;
+    assert.equal((await backend.rpc('public_catalog',{})).error, null);
+    assert.equal((await backend.rpc('vote_drink',{})).error, null);
+    assert.deepEqual(calls, [primary + catalog, primary + catalog, fallback + catalog, fallback + '/rest/v1/rpc/vote_drink']);
   } finally {globalThis.fetch = originalFetch;}
 });

@@ -1,5 +1,12 @@
 # UniCafe deployment status
 
+## Mobile network repair — 2026-11-11
+
+- `https://unicafeznu.ir/` and `https://www.unicafeznu.ir/` moved to the existing Cloudflare Pages project `unicafe-znu`. Both served the updated homepage over HTTPS from Hamrah Aval and Germany. An earlier Hamrah Aval measurement to the GitHub Pages origin timed out while the API was reachable.
+- GitHub Pages uses the independent project address `https://thelouismahdi.github.io/UniCafe.site/`. The site URL and base path are discovered by its deployment workflow.
+- The frontend now switches gateways for public reads when a route fails and refreshes the visible menu less frequently. Tests passed for gateway recovery, no automatic write replay, SQL authorization, moderation and the catalog. Published apex verification passed for all six pages and static assets, the live 24-item catalog and anonymous denial of private data and admin calls.
+- See [NETWORK_OPERATIONS.md](NETWORK_OPERATIONS.md) for current publishing, capacity and pricing. The notes below are historical.
+
 ## Network repair — 2026-10-30 (supersedes historical host/domain notes below)
 
 - Official domain `https://unicafeznu.ir/` is active on GitHub Pages, with a newly approved certificate for apex/`www` and HTTPS enforcement enabled. HTTP and `www` redirect to the HTTPS apex.
